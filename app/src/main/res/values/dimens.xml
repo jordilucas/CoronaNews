@@ -2,5 +2,5 @@
 <resources>
     <dimen name="cardViewHeight">220dp</dimen>
     <dimen name="margin_default">16dp</dimen>
-    <dimen name="text_size_default">24sp</dimen>
+    <dimen name="text_size_default">14sp</dimen>
 </resources>
