@@ -18,10 +18,11 @@ import kotlinx.android.synthetic.main.item_list.view.*
 import java.text.SimpleDateFormat
 
 
-class CoronaAdapter(private val corona: List<CoronaDto>) : RecyclerView.Adapter<CoronaAdapter.ViewHolder>(),
-    View.OnClickListener {
+class CoronaAdapter(private val corona: List<CoronaDto>) : RecyclerView.Adapter<CoronaAdapter.ViewHolder>(){
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
-    private val url:String = ""
+
+    var itemClick: ((String) -> Unit)? = null
+    private var url:String = ""
     lateinit var context:Context
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val holder = LayoutInflater.from(parent.context).inflate(R.layout.item_list, parent, false)
@@ -39,20 +40,23 @@ class CoronaAdapter(private val corona: List<CoronaDto>) : RecyclerView.Adapter<
             val formatter = SimpleDateFormat("dd/MM/yyyy HH:mm:ss")
             val output = formatter.format(parser.parse(corona.dt_envio))
             txt_date.text = output
+            Log.d("AdapterURL", url)
             imageUrl.loadUrl(corona.imagem, progress)
 
+            view?.setOnClickListener {
+                Log.d("AdapterURL", corona.id.toString())
+                context.startActivity(newIntent(context, corona.url))
+            }
         }
-
-        view.setOnClickListener(this)
-
     }
 
     override fun getItemCount() = corona.size
-    override fun onClick(v: View?) {
-        val intent:Intent = Intent(context, WebViewActivity::class.java)
-        intent.putExtra("url", url)
-        context.startActivity(intent)
+
+    fun newIntent(context: Context, pageUrl: String): Intent {
+        var intent = Intent(context, WebViewActivity::class.java)
+        intent.putExtra("url", pageUrl)
+        return intent
     }
-
-
 }
+
+
