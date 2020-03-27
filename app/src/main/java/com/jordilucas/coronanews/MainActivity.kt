@@ -39,15 +39,7 @@ class MainActivity : AppCompatActivity() {
         val service = RetrofitInitializer.coronaService().coronaList()
         service.enqueue(object : Callback<List<CoronaDto>> {
             override fun onResponse(call: Call<List<CoronaDto>>, response: Response<List<CoronaDto>>) {
-
-                /*response?.body()?.let {
-                    val list: List<CoronaDto> = it
-
-                    Log.d("onResponse", list.toString())
-                }*/
-
                 recycler_view.adapter = response.body()?.let { CoronaAdapter(it) }
-
             }
 
             override fun onFailure(call: Call<List<CoronaDto>>, t: Throwable) {
