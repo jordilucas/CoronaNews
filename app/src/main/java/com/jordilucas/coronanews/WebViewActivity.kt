@@ -97,4 +97,5 @@ class WebViewActivity : AppCompatActivity() {
         webView.loadUrl(pageUrl)
     }
 
+
 }
